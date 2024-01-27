@@ -1,0 +1,8 @@
+{
+  "type": "mongo",
+  "host": "localhost",
+  "port": 5432,
+  "username": "mongo",
+  "password": "mongo",
+  "database": "chameleon"
+}
