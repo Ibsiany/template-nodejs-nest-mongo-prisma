@@ -24,6 +24,7 @@ describe('Create category UseCase', () => {
           provide: UserRepository,
           useValue: {
             findById: jest.fn(),
+            updateAndSave: jest.fn(),
           },
         },
       ],
@@ -72,7 +73,7 @@ describe('Create category UseCase', () => {
       .mockResolvedValueOnce(category);
 
     const result = await createCategoryUseCase.execute(
-      'Test category',
+      { name: 'Test category', color: 'red' },
       user.id,
     );
 

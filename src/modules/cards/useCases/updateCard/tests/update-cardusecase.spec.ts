@@ -23,6 +23,7 @@ describe('Update card UseCase', () => {
           provide: CategoryRepository,
           useValue: {
             findById: jest.fn(),
+            updateAndSave: jest.fn(),
           },
         },
       ],

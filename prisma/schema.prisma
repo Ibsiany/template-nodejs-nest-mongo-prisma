@@ -23,6 +23,7 @@ model Category {
   created_at   DateTime
   updated_at   DateTime
   name         String
+  color         String
   user_id      String
   card_ids     String[]
 }

@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserRepository } from '../../../../users/repositories/user.repository';
 import { CategoryEntityInterface } from '../../../interfaces/category-entity.interface';
 import { CategoryRepository } from '../../../repositories/category.repository';
 import { DeleteCategoryUseCase } from '../delete-category.usecase';
@@ -16,6 +17,13 @@ describe('Delete category UseCase', () => {
           useValue: {
             findById: jest.fn(),
             deleteCategory: jest.fn(),
+          },
+        },
+        {
+          provide: UserRepository,
+          useValue: {
+            findById: jest.fn(),
+            updateAndSave: jest.fn(),
           },
         },
       ],

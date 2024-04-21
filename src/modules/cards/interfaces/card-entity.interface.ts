@@ -11,4 +11,5 @@ export interface CardEntityInterface {
   user_id: string;
   categories?: CategoryEntityInterface[];
   user?: UserEntityInterface;
+  category_ids?: string[];
 }

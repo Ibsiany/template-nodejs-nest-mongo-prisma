@@ -27,6 +27,7 @@ describe('Create card UseCase', () => {
           useValue: {
             createAndSave: jest.fn(),
             findById: jest.fn(),
+            updateAndSave: jest.fn(),
           },
         },
       ],

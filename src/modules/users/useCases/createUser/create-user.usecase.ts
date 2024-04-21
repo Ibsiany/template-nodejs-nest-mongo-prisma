@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { genSaltSync, hashSync } from 'bcryptjs';
+import fs from 'fs';
+import path from 'path';
 import { ICreateUserDTO } from '../../dtos/request/create-user-request.dto';
 import { UserEntityInterface } from '../../interfaces/user-entity.interface';
 import { UserRepository } from '../../repositories/user.repository';
@@ -26,6 +28,10 @@ export class CreateUserUseCase {
 
     const salt = genSaltSync(8);
     const hash = hashSync(password, salt);
+
+    if (photo) {
+      fs.rmdirSync(path.join(__dirname, `../../../../uploads/${photo}`));
+    }
 
     const user = (await this.userRepository.createAndSave({
       name,

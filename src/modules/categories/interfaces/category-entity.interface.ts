@@ -6,6 +6,7 @@ export interface CategoryEntityInterface {
   created_at: Date;
   updated_at: Date;
   name: string;
+  color: string;
   user_id: string;
   user?: UserEntityInterface;
   cards?: CardEntityInterface[];

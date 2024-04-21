@@ -10,5 +10,7 @@ export interface UserEntityInterface {
   password: string;
   photo: string;
   category?: CategoryEntityInterface[];
+  category_ids?: string[];
   cards?: CardEntityInterface[];
+  card_ids?: string[];
 }

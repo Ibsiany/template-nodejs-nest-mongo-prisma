@@ -37,4 +37,12 @@ export class FindAllCardsRequestDTO {
   @IsString()
   @IsOptional()
   readonly title: string;
+
+  @ApiPropertyOptional({
+    type: 'array',
+    description: 'Categories ids',
+    example: ['uuid'],
+  })
+  @IsOptional()
+  readonly category_ids: string[];
 }

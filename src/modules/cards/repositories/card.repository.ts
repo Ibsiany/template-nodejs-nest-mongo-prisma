@@ -26,14 +26,37 @@ export class CardRepository implements CardRepositoryInterface {
   }
 
   async updateAndSave(card: CardEntityInterface): Promise<CardEntityInterface> {
+    const { id, ...data } = card;
+
+    const { categories, ...rest } = data;
+
     return this.prisma.cards.update({
       where: { id: card.id },
-      data: card,
+      data: rest,
     });
   }
 
   async findById(id: string): Promise<CardEntityInterface | null> {
-    return this.prisma.cards.findUnique({ where: { id: id } });
+    const cards = await this.prisma.cards.findUnique({ where: { id: id } });
+
+    const cardsWithCategories = (await Promise.all(
+      cards.map(async (card) => {
+        const categories = await this.prisma.category.findMany({
+          where: {
+            id: {
+              in: card.category_ids,
+            },
+          },
+        });
+
+        return {
+          ...card,
+          categories,
+        };
+      }),
+    )) as any;
+
+    return cardsWithCategories;
   }
 
   async findAll({

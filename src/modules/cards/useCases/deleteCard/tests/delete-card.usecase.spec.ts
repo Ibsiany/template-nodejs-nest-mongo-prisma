@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserRepository } from '../../../../users/repositories/user.repository';
 import { CardEntityInterface } from '../../../interfaces/card-entity.interface';
 import { CardRepository } from '../../../repositories/card.repository';
 import { DeleteCardUseCase } from '../delete-card.usecase';
@@ -15,6 +16,13 @@ describe('Delete card UseCase', () => {
           useValue: {
             findById: jest.fn(),
             deleteCard: jest.fn(),
+          },
+        },
+        {
+          provide: UserRepository,
+          useValue: {
+            findById: jest.fn(),
+            updateAndSave: jest.fn(),
           },
         },
       ],

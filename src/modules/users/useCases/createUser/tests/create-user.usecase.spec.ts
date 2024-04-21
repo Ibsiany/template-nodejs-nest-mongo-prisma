@@ -1,8 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import fs from 'fs';
 import { ICreateUserDTO } from '../../../dtos/request/create-user-request.dto';
 import { UserEntityInterface } from '../../../interfaces/user-entity.interface';
 import { UserRepository } from '../../../repositories/user.repository';
 import { CreateUserUseCase } from '../create-user.usecase';
+
+jest.mock('fs');
 
 describe('Create user UseCase', () => {
   let createUserUseCase: CreateUserUseCase, repository: UserRepository;
@@ -36,10 +39,13 @@ describe('Create user UseCase', () => {
   });
 
   it('Should be able to create user', async () => {
+    fs.rmdirSync = jest.fn(() => 'mocked value');
+
     const user = {
       name: 'Test User',
       email: 'test@example.com',
       password: '******',
+      photo: 'photo.png',
     } as ICreateUserDTO;
 
     const userCreated = Object.assign(user, { id: '1' }) as UserEntityInterface;
@@ -54,6 +60,7 @@ describe('Create user UseCase', () => {
 
     const result = await createUserUseCase.execute(user);
 
+    expect(fs.rmdirSync).toHaveBeenCalled();
     expect(result.id).toEqual(userCreated.id);
     expect(findByEmailUserSpy).toHaveBeenCalledWith(user.email);
     expect(createAndSaveUserSpy).toHaveBeenCalled();
