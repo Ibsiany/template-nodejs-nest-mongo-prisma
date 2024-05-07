@@ -4,8 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { compare, hash } from 'bcryptjs';
-import fs from 'fs';
-import path from 'path';
 import { UserEntityInterface } from '../../interfaces/user-entity.interface';
 import { UserRepository } from '../../repositories/user.repository';
 import { UpdateUserDTO } from './dtos/request/update-user-request.dto';
@@ -43,8 +41,6 @@ export class UpdateUserUseCase {
     }
 
     if (photo) {
-      fs.rmdirSync(path.join(__dirname, `../../../../uploads/${user.photo}`));
-
       user.photo = photo;
     }
 
