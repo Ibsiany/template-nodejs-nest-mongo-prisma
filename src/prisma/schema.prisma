@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model Cards {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId // Using default auto-generated MongoDB ObjectId
+  status       String
+  title        String
+  description  String
+  created_at   DateTime
+  updated_at   DateTime
+  user_id      String
+  category_ids String[]
+}
+
+model Category {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId // Using default auto-generated MongoDB ObjectId
+  created_at   DateTime
+  updated_at   DateTime
+  name         String
+  color         String
+  user_id      String
+  card_ids     String[]
+}
+
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId // Using default auto-generated MongoDB ObjectId
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  name       String
+  email      String    @unique
+  password   String
+  photo      String?
+  card_ids   String[]
+  category_ids String[]
+}
+
+
+model migrations {
+  id        Int    @id @map("_id")
+  timestamp BigInt
+  name      String
+}
